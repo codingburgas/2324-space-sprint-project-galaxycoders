@@ -4,8 +4,9 @@
 #include "physics.cpp"
 
 
-const int windowWidth = 1000;
-const int windowHeight = 800;
+const int windowWidth = 1240;
+const int windowHeight = 720;
+
 
 int main() {
 
@@ -13,14 +14,15 @@ int main() {
 	window.setFramerateLimit(60);
 
 
-	//Define Text and Fonts
+
+
+	//Start Game Text
 	sf::Text StartGameText;
 	sf::Text KeyPressText;
 
 	sf::Font StartFont;
 	sf::Font KeyPressFont;
 
-	//Load Fonts
 	if (!StartFont.loadFromFile("resources/Fonts/vtks-giz/vtks giz.ttf")) {
 		std::cout << "Error!";
 	}
@@ -31,37 +33,39 @@ int main() {
 
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
+	StartGameText.setPosition(355, 270);
 	StartGameText.setCharacterSize(80);
 	StartGameText.setFillColor(sf::Color::White);
-	StartGameText.setPosition(240, 270);
 
 	KeyPressText.setString("Press a Key To Start Game");
 	KeyPressText.setFont(KeyPressFont);
+	KeyPressText.setPosition(475, 370);
 	KeyPressText.setCharacterSize(23);
 	KeyPressText.setFillColor(sf::Color::White);
-	KeyPressText.setPosition(350, 370);
 
 
 
+
+	//Rocket Sprite
 	sf::Texture Rocket;
 	if (!Rocket.loadFromFile("assets/rocket-texture.png")) {
 		std::cout << "Couldn't load rocket" << std::endl;
 	}
 	
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(470, 300);
+	sf::Vector2f RocketPosition(615, 330);
 	float RocketRotation = 0;
 
 	RocketSprite.setTexture(Rocket);
 	RocketSprite.setPosition(RocketPosition);
 	RocketSprite.setRotation(RocketRotation);
-	RocketSprite.setScale(sf::Vector2f(1.2, 1.2));
+	RocketSprite.setScale(sf::Vector2f(1.5, 1.5));
+	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
-
-	float xRocketRotation = 1;
+	float xRotationVel = 0.2f;
 	float xRocketVelocity = 3;
-	float yRocketVelocity = 3;
 	
+
 	//Game Loop
 	while (window.isOpen()) {
 
@@ -80,30 +84,59 @@ int main() {
 		}
 
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-				if (RocketRotation > 180) {
+		
+		//Movement
 
-				RocketPosition.y += yRocketVelocity;
-				}
-				else {
-					RocketPosition.y -= yRocketVelocity;
-				}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			RocketPosition.x -= xRocketVelocity;
+			if (RocketRotation > -35) {
+
+				RocketRotation -= xRotationVel;
+
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-				RocketPosition.x -= xRocketVelocity;
-				RocketRotation -= xRocketRotation;
+			if (RocketRotation < -1 && xRocketVelocity < 15) {
+				xRocketVelocity += 0.1f;
 			}
+		}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				RocketPosition.x += xRocketVelocity;
-				RocketRotation += xRocketRotation;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			RocketPosition.x += xRocketVelocity;
+			if (RocketRotation < 35) {
+
+				RocketRotation += xRotationVel;
+
 			}
+			if (RocketRotation > 1 && xRocketVelocity < 15) {
+				xRocketVelocity += 0.1f;
+			}
+		}
 
 
-		//physics
-		RocketSprite.setRotation(RocketRotation);
+
+
+
+
+		//Collision With Walls
+		if (RocketPosition.x > 1180) {
+			RocketPosition.x = -10;
+		}
+
+		if (RocketPosition.x < -10) {
+			RocketPosition.x = 1180;
+		}
+
+		if (RocketPosition.x > 1180) {
+			RocketPosition.x = -10;
+		}
+
+		if (RocketPosition.x < -10) {
+			RocketPosition.x = 1180;
+		}
+			
+
+		
 		RocketSprite.setPosition(RocketPosition);
-
+		RocketSprite.setRotation(RocketRotation);
 
 
 		window.clear(sf::Color::Black);

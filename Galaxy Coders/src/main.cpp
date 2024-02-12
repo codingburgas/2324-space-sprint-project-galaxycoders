@@ -11,7 +11,9 @@ int main() {
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 
+	bool GameOn = false;
 
+	
 
 
 	//Start Game Text
@@ -43,6 +45,7 @@ int main() {
 
 
 
+
 	//Game Background
 	sf::Texture mntnBackground;
 	if (!mntnBackground.loadFromFile("assets/45908.jpg")) {
@@ -50,9 +53,10 @@ int main() {
 	}
 
 	sf::Sprite mntnSprite;
+	sf::Vector2f mntnPosition(-70, 0);
 	mntnSprite.setTexture(mntnBackground);
 	mntnSprite.setScale(sf::Vector2f(0.26, 0.24));
-	mntnSprite.setPosition(-70, 0);
+	mntnSprite.setPosition(mntnPosition);
 
 
 
@@ -64,7 +68,7 @@ int main() {
 	}
 	
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(965, 630);
+	sf::Vector2f RocketPosition(965, 770);
 	float RocketRotation = 0;
 
 	RocketSprite.setTexture(Rocket);
@@ -77,27 +81,12 @@ int main() {
 	float xRocketVelocity = 8;
 	
 
+
+
 	//Game Loop
-	while (window.isOpen()) {
+	while(window.isOpen()){
 
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				break;
-
-			case sf::Event::KeyPressed:
-				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-				window.close();
-				break;
-			}
-		}
-
-
-		
 		//Movement
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			RocketPosition.x -= xRocketVelocity;
 			if (RocketRotation > -35) {
@@ -105,15 +94,15 @@ int main() {
 				RocketRotation -= xRotationVel;
 
 			}
-			if (RocketRotation < -1 && xRocketVelocity < 15) {
+			if (RocketRotation < -6 && xRocketVelocity < 15) {
 				xRocketVelocity += 0.1f;
 			}
 
-			if (RocketRotation > 1) {
+			if (RocketRotation > 6) {
 				xRocketVelocity -= 0.1f;
 			}
 
-			if (RocketRotation == 8 && RocketRotation < 0) {
+			if (RocketRotation == 6 && RocketRotation < 0) {
 				xRocketVelocity += 0.1f;
 			}
 		}
@@ -125,15 +114,15 @@ int main() {
 				RocketRotation += xRotationVel;
 
 			}
-			if (RocketRotation > 1 && xRocketVelocity < 15) {
+			if (RocketRotation > 6 && xRocketVelocity < 15) {
 				xRocketVelocity += 0.1f;
 			}
 
-			if (RocketRotation < -1) {
+			if (RocketRotation < -6) {
 				xRocketVelocity -= 0.1f;
 			}
 
-			if (RocketRotation == 8 && RocketRotation > 0) {
+			if (RocketRotation == 6 && RocketRotation > 0) {
 				xRocketVelocity += 0.1f;
 			}
 
@@ -158,19 +147,43 @@ int main() {
 			RocketPosition.x = 1840;
 		}
 			
-
-		
 		RocketSprite.setPosition(RocketPosition);
 		RocketSprite.setRotation(RocketRotation);
 
 
-		window.clear(sf::Color::Black);
+		//Draw
+		window.clear();
 
 		window.draw(mntnSprite);
 
-		window.draw(StartGameText);
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			switch (event.type) {
+			case sf::Event::Closed:
+				window.close();
+				break;
 
-		window.draw(KeyPressText);
+			case sf::Event::KeyPressed:
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+				window.close();
+
+				GameOn = true;
+				break;
+
+			}
+		}
+
+		if (GameOn == false) {
+
+			window.draw(StartGameText);
+
+			window.draw(KeyPressText);
+
+		}
+
+		if (GameOn == true) {
+			mntnPosition.y -= 1;
+		}
 
 		window.draw(RocketSprite);
 

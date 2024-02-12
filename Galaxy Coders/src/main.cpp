@@ -1,16 +1,14 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "textures.cpp"
-#include "physics.cpp"
 
 
-const int windowWidth = 1240;
-const int windowHeight = 720;
+const int windowWidth = 1920;
+const int windowHeight = 1080;
 
 
 int main() {
 
-	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders");
+	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 
 
@@ -33,15 +31,28 @@ int main() {
 
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
-	StartGameText.setPosition(355, 270);
+	StartGameText.setPosition(705, 50);
 	StartGameText.setCharacterSize(80);
 	StartGameText.setFillColor(sf::Color::White);
 
 	KeyPressText.setString("Press a Key To Start Game");
 	KeyPressText.setFont(KeyPressFont);
-	KeyPressText.setPosition(475, 370);
+	KeyPressText.setPosition(820, 150);
 	KeyPressText.setCharacterSize(23);
 	KeyPressText.setFillColor(sf::Color::White);
+
+
+
+	//Game Background
+	sf::Texture mntnBackground;
+	if (!mntnBackground.loadFromFile("assets/45908.jpg")) {
+		std::cout << "Couldn't load mountain background" << std::endl;
+	}
+
+	sf::Sprite mntnSprite;
+	mntnSprite.setTexture(mntnBackground);
+	mntnSprite.setScale(sf::Vector2f(0.26, 0.24));
+	mntnSprite.setPosition(-70, 0);
 
 
 
@@ -53,17 +64,17 @@ int main() {
 	}
 	
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(615, 330);
+	sf::Vector2f RocketPosition(965, 630);
 	float RocketRotation = 0;
 
 	RocketSprite.setTexture(Rocket);
 	RocketSprite.setPosition(RocketPosition);
 	RocketSprite.setRotation(RocketRotation);
-	RocketSprite.setScale(sf::Vector2f(1.5, 1.5));
+	RocketSprite.setScale(sf::Vector2f(2.5, 2.5));
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
-	float xRotationVel = 0.2f;
-	float xRocketVelocity = 3;
+	float xRotationVel = 0.4f;
+	float xRocketVelocity = 8;
 	
 
 	//Game Loop
@@ -97,6 +108,14 @@ int main() {
 			if (RocketRotation < -1 && xRocketVelocity < 15) {
 				xRocketVelocity += 0.1f;
 			}
+
+			if (RocketRotation > 1) {
+				xRocketVelocity -= 0.1f;
+			}
+
+			if (RocketRotation == 8 && RocketRotation < 0) {
+				xRocketVelocity += 0.1f;
+			}
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -109,28 +128,34 @@ int main() {
 			if (RocketRotation > 1 && xRocketVelocity < 15) {
 				xRocketVelocity += 0.1f;
 			}
+
+			if (RocketRotation < -1) {
+				xRocketVelocity -= 0.1f;
+			}
+
+			if (RocketRotation == 8 && RocketRotation > 0) {
+				xRocketVelocity += 0.1f;
+			}
+
 		}
-
-
-
 
 
 
 		//Collision With Walls
-		if (RocketPosition.x > 1180) {
+		if (RocketPosition.x > 1840) {
 			RocketPosition.x = -10;
 		}
 
-		if (RocketPosition.x < -10) {
-			RocketPosition.x = 1180;
+		else if (RocketPosition.x < -10) {
+			RocketPosition.x = 1840;
 		}
 
-		if (RocketPosition.x > 1180) {
+		else if (RocketPosition.x > 1840) {
 			RocketPosition.x = -10;
 		}
 
-		if (RocketPosition.x < -10) {
-			RocketPosition.x = 1180;
+		else if (RocketPosition.x < -10) {
+			RocketPosition.x = 1840;
 		}
 			
 
@@ -140,6 +165,8 @@ int main() {
 
 
 		window.clear(sf::Color::Black);
+
+		window.draw(mntnSprite);
 
 		window.draw(StartGameText);
 

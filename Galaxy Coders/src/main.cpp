@@ -15,7 +15,6 @@ int main() {
 
 	
 
-
 	//Start Game Text
 	sf::Text StartGameText;
 	sf::Text KeyPressText;
@@ -33,16 +32,15 @@ int main() {
 
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
-	StartGameText.setPosition(705, 50);
-	StartGameText.setCharacterSize(80);
+	StartGameText.setPosition(640, 10);
+	StartGameText.setCharacterSize(100);
 	StartGameText.setFillColor(sf::Color::White);
 
-	KeyPressText.setString("Press a Key To Start Game");
+	KeyPressText.setString("Press Any Key To Start Game");
 	KeyPressText.setFont(KeyPressFont);
-	KeyPressText.setPosition(820, 150);
-	KeyPressText.setCharacterSize(23);
+	KeyPressText.setPosition(800, 140);
+	KeyPressText.setCharacterSize(25);
 	KeyPressText.setFillColor(sf::Color::White);
-
 
 
 
@@ -58,6 +56,7 @@ int main() {
 	mntnSprite.setScale(sf::Vector2f(0.26, 0.24));
 	mntnSprite.setPosition(mntnPosition);
 
+	float yBackgroundVel = 5;
 
 
 
@@ -78,8 +77,10 @@ int main() {
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
 	float xRotationVel = 0.4f;
-	float xRocketVelocity = 8;
+	float xRocketVelocity = 6;
 	
+
+
 
 
 
@@ -182,7 +183,11 @@ int main() {
 		}
 
 		if (GameOn == true) {
-			mntnPosition.y -= 1;
+			if (yBackgroundVel < 40) {
+				yBackgroundVel += 0.1f;
+			}
+			mntnPosition.y += yBackgroundVel;
+			mntnSprite.setPosition(mntnPosition);
 		}
 
 		window.draw(RocketSprite);

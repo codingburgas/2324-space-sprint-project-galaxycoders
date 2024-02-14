@@ -14,12 +14,13 @@ int main() {
 
 	bool GameOn = false;
 
-	
+
 
 	//Start Game Text
 	sf::Text StartGameText;
 	sf::Text KeyPressText;
 	sf::Text Score;
+	sf::Text ScoreText;
 
 	sf::Font StartFont;
 	sf::Font KeyPressFont;
@@ -32,31 +33,34 @@ int main() {
 		std::cout << "Error!";
 	}
 
-	
-
-
-
 
 
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
-	StartGameText.setPosition(540, 10);
+	StartGameText.setPosition(483, -5);
 	StartGameText.setCharacterSize(100);
 	StartGameText.setFillColor(sf::Color::White);
 
 	KeyPressText.setString("Press Any Key To Start Game");
 	KeyPressText.setFont(KeyPressFont);
-	KeyPressText.setPosition(700, 140);
+	KeyPressText.setPosition(630, 120);
 	KeyPressText.setCharacterSize(25);
 	KeyPressText.setFillColor(sf::Color::White);
 
 
-	float score = 0;
+	int score = 0;
 	Score.setString(std::to_string(score));
 	Score.setFont(KeyPressFont);
-	Score.setPosition(sf::Vector2f(600, 20));
-	Score.setCharacterSize(80);
+	Score.setPosition(sf::Vector2f(260, 20));
+	Score.setCharacterSize(70);
 	Score.setFillColor(sf::Color::White);
+
+	ScoreText.setString("SCORE:");
+	ScoreText.setFont(KeyPressFont);
+	ScoreText.setPosition(sf::Vector2f(30, 20));
+	ScoreText.setCharacterSize(70);
+	ScoreText.setFillColor(sf::Color::White);
+
 
 
 	//Game Background
@@ -78,11 +82,11 @@ int main() {
 	//Rocket Sprite
 	sf::Texture Rocket;
 	if (!Rocket.loadFromFile("assets/rocket-texture.png")) {
-		std::cout << "Couldn't load rocket"<< std::endl;
+		std::cout << "Couldn't load rocket" << std::endl;
 	}
-	
+
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(805, 620);
+	sf::Vector2f RocketPosition(810, 620);
 	float RocketRotation = 0;
 
 	RocketSprite.setTexture(Rocket);
@@ -92,15 +96,16 @@ int main() {
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
 	float xRotationVel = 0.4f;
-	float xRocketVelocity = 6;
-	
+	float xRocketVelocity = 8;
 
 
+
+	sf::Clock ScoreTimer;
 
 
 
 	//Game Loop
-	while(window.isOpen()){
+	while (window.isOpen()) {
 
 		//Movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -110,15 +115,15 @@ int main() {
 				RocketRotation -= xRotationVel;
 
 			}
-			if (RocketRotation < -6 && xRocketVelocity < 15) {
+			if (RocketRotation < -8 && xRocketVelocity < 25) {
 				xRocketVelocity += 0.1f;
 			}
 
-			if (RocketRotation > 6) {
+			if (RocketRotation > 8) {
 				xRocketVelocity -= 0.1f;
 			}
 
-			if (RocketRotation == 6 && RocketRotation < 0) {
+			if (RocketRotation == 8 && RocketRotation < 0) {
 				xRocketVelocity += 0.1f;
 			}
 		}
@@ -130,15 +135,15 @@ int main() {
 				RocketRotation += xRotationVel;
 
 			}
-			if (RocketRotation > 6 && xRocketVelocity < 15) {
+			if (RocketRotation > 8 && xRocketVelocity < 25) {
 				xRocketVelocity += 0.1f;
 			}
 
-			if (RocketRotation < -6) {
+			if (RocketRotation < -8) {
 				xRocketVelocity -= 0.1f;
 			}
 
-			if (RocketRotation == 6 && RocketRotation > 0) {
+			if (RocketRotation == 8 && RocketRotation > 0) {
 				xRocketVelocity += 0.1f;
 			}
 
@@ -162,9 +167,10 @@ int main() {
 		else if (RocketPosition.x < -10) {
 			RocketPosition.x = 1840;
 		}
-			
+
 		RocketSprite.setPosition(RocketPosition);
 		RocketSprite.setRotation(RocketRotation);
+
 
 
 		//Draw
@@ -180,8 +186,8 @@ int main() {
 				break;
 
 			case sf::Event::KeyPressed:
-				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-				window.close();
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+					window.close();
 
 				GameOn = true;
 				break;
@@ -195,6 +201,7 @@ int main() {
 
 			window.draw(KeyPressText);
 
+			sf::Time elapsed = ScoreTimer.restart();
 		}
 
 		if (GameOn == true) {
@@ -204,9 +211,14 @@ int main() {
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
 
-			score += 0.1f ;
+
+			sf::Time elapsed = ScoreTimer.getElapsedTime();
+
+			score = elapsed.asSeconds() * 10;
 			window.draw(Score);
 			Score.setString(std::to_string(score));
+
+			window.draw(ScoreText);
 		}
 
 		window.draw(RocketSprite);

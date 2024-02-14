@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iomanip>
-#include <sstream>
 
 const int windowWidth = 1600;
 const int windowHeight = 900;
@@ -208,7 +207,6 @@ int main() {
 			score += 0.1f ;
 			window.draw(Score);
 			Score.setString(std::to_string(score));
-			std::cout << std::setprecision(2) << score;
 		}
 
 		window.draw(RocketSprite);

@@ -15,12 +15,12 @@ int main() {
 	bool GameOn = false;
 
 
-
-	//Start Game Text
+	//Game Text
 	sf::Text StartGameText;
 	sf::Text KeyPressText;
 	sf::Text Score;
 	sf::Text ScoreText;
+
 
 	sf::Font StartFont;
 	sf::Font KeyPressFont;
@@ -32,7 +32,6 @@ int main() {
 	if (!KeyPressFont.loadFromFile("resources/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
 		std::cout << "Error!";
 	}
-
 
 
 	StartGameText.setString("Galaxy Coders");
@@ -69,14 +68,30 @@ int main() {
 		std::cout << "Couldn't load mountain background" << std::endl;
 	}
 
+	sf::Texture BlueSky;
+	if (!BlueSky.loadFromFile("assets/background-1.png")) {
+		std::cout << "Couldn't load sky background" << std::endl;
+	}
+
 	sf::Sprite mntnSprite;
 	sf::Vector2f mntnPosition(-70, 0);
 	mntnSprite.setTexture(mntnBackground);
 	mntnSprite.setScale(sf::Vector2f(0.22, 0.2));
 	mntnSprite.setPosition(mntnPosition);
 
-	float yBackgroundVel = 5;
+	sf::Sprite SkySprite;
+	sf::Vector2f skyPosition(0, -900);
+	SkySprite.setTexture(BlueSky);
+	SkySprite.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite.setPosition(skyPosition);
 
+	sf::Sprite SkySprite2;
+	sf::Vector2f skyPosition2(0, -1799);
+	SkySprite2.setTexture(BlueSky);
+	SkySprite2.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite2.setPosition(skyPosition2);
+
+	float yBackgroundVel = 5;
 
 
 	//Rocket Sprite
@@ -95,13 +110,10 @@ int main() {
 	RocketSprite.setScale(sf::Vector2f(2.5, 2.5));
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
-	float xRotationVel = 0.4f;
+	float xRotationVel = 0.8f;
 	float xRocketVelocity = 8;
 
-
-
 	sf::Clock ScoreTimer;
-
 
 
 	//Game Loop
@@ -150,7 +162,6 @@ int main() {
 		}
 
 
-
 		//Collision With Walls
 		if (RocketPosition.x > 1840) {
 			RocketPosition.x = -10;
@@ -172,11 +183,19 @@ int main() {
 		RocketSprite.setRotation(RocketRotation);
 
 
-
 		//Draw
 		window.clear();
 
 		window.draw(mntnSprite);
+
+		if (skyPosition.y != 900) {
+			window.draw(SkySprite);
+		}
+		else if (skyPosition.y <= -899 && skyPosition.y != 900) {
+			window.draw(SkySprite2);
+		}
+
+		
 
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -190,11 +209,34 @@ int main() {
 					window.close();
 
 				GameOn = true;
+
+
+				//Reset Button
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+					GameOn = false;
+
+					RocketPosition.x = 810;
+					RocketSprite.setPosition(RocketPosition);
+
+					RocketRotation = 0;
+					RocketSprite.setRotation(RocketRotation);
+
+					mntnPosition.y = 0;
+					mntnSprite.setPosition(mntnPosition);
+
+					skyPosition.y = -900;
+					SkySprite.setPosition(skyPosition);
+
+					yBackgroundVel = 5;
+
+				}
 				break;
+
 
 			}
 		}
 
+		//Start Screen
 		if (GameOn == false) {
 
 			window.draw(StartGameText);
@@ -204,12 +246,20 @@ int main() {
 			sf::Time elapsed = ScoreTimer.restart();
 		}
 
+
+		//Game On Loop
 		if (GameOn == true) {
 			if (yBackgroundVel < 40) {
 				yBackgroundVel += 0.1f;
 			}
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
+
+			skyPosition.y += yBackgroundVel;
+			SkySprite.setPosition(skyPosition);
+
+			skyPosition2.y += yBackgroundVel;
+			SkySprite2.setPosition(skyPosition2);
 
 
 			sf::Time elapsed = ScoreTimer.getElapsedTime();
@@ -220,6 +270,7 @@ int main() {
 
 			window.draw(ScoreText);
 		}
+
 
 		window.draw(RocketSprite);
 

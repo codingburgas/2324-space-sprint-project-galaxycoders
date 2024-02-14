@@ -1,14 +1,16 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <string>
+#include <iomanip>
+#include <sstream>
 
-
-const int windowWidth = 1920;
-const int windowHeight = 1080;
+const int windowWidth = 1600;
+const int windowHeight = 900;
 
 
 int main() {
 
-	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders");
 	window.setFramerateLimit(60);
 
 	bool GameOn = false;
@@ -18,6 +20,7 @@ int main() {
 	//Start Game Text
 	sf::Text StartGameText;
 	sf::Text KeyPressText;
+	sf::Text Score;
 
 	sf::Font StartFont;
 	sf::Font KeyPressFont;
@@ -30,18 +33,31 @@ int main() {
 		std::cout << "Error!";
 	}
 
+	
+
+
+
+
+
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
-	StartGameText.setPosition(640, 10);
+	StartGameText.setPosition(540, 10);
 	StartGameText.setCharacterSize(100);
 	StartGameText.setFillColor(sf::Color::White);
 
 	KeyPressText.setString("Press Any Key To Start Game");
 	KeyPressText.setFont(KeyPressFont);
-	KeyPressText.setPosition(800, 140);
+	KeyPressText.setPosition(700, 140);
 	KeyPressText.setCharacterSize(25);
 	KeyPressText.setFillColor(sf::Color::White);
 
+
+	float score = 0;
+	Score.setString(std::to_string(score));
+	Score.setFont(KeyPressFont);
+	Score.setPosition(sf::Vector2f(600, 20));
+	Score.setCharacterSize(80);
+	Score.setFillColor(sf::Color::White);
 
 
 	//Game Background
@@ -53,7 +69,7 @@ int main() {
 	sf::Sprite mntnSprite;
 	sf::Vector2f mntnPosition(-70, 0);
 	mntnSprite.setTexture(mntnBackground);
-	mntnSprite.setScale(sf::Vector2f(0.26, 0.24));
+	mntnSprite.setScale(sf::Vector2f(0.22, 0.2));
 	mntnSprite.setPosition(mntnPosition);
 
 	float yBackgroundVel = 5;
@@ -63,11 +79,11 @@ int main() {
 	//Rocket Sprite
 	sf::Texture Rocket;
 	if (!Rocket.loadFromFile("assets/rocket-texture.png")) {
-		std::cout << "Couldn't load rocket" << std::endl;
+		std::cout << "Couldn't load rocket"<< std::endl;
 	}
 	
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(965, 770);
+	sf::Vector2f RocketPosition(805, 620);
 	float RocketRotation = 0;
 
 	RocketSprite.setTexture(Rocket);
@@ -188,6 +204,11 @@ int main() {
 			}
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
+
+			score += 0.1f ;
+			window.draw(Score);
+			Score.setString(std::to_string(score));
+			std::cout << std::setprecision(2) << score;
 		}
 
 		window.draw(RocketSprite);

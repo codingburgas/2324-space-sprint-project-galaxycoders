@@ -20,20 +20,20 @@ int main() {
 	sf::Text KeyPressText;
 	sf::Text Score;
 	sf::Text ScoreText;
-
+	sf::Text ResetText;
 
 	sf::Font StartFont;
-	sf::Font KeyPressFont;
+	sf::Font KGCPFont;
 
 	if (!StartFont.loadFromFile("resources/Fonts/vtks-giz/vtks giz.ttf")) {
 		std::cout << "Error!";
 	}
 
-	if (!KeyPressFont.loadFromFile("resources/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
+	if (!KGCPFont.loadFromFile("resources/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
 		std::cout << "Error!";
 	}
 
-
+	//Start Screen Text
 	StartGameText.setString("Galaxy Coders");
 	StartGameText.setFont(StartFont);
 	StartGameText.setPosition(483, -5);
@@ -41,24 +41,31 @@ int main() {
 	StartGameText.setFillColor(sf::Color::White);
 
 	KeyPressText.setString("Press Any Key To Start Game");
-	KeyPressText.setFont(KeyPressFont);
+	KeyPressText.setFont(KGCPFont);
 	KeyPressText.setPosition(630, 120);
 	KeyPressText.setCharacterSize(25);
 	KeyPressText.setFillColor(sf::Color::White);
 
-
+	//GameOn Text
 	int score = 0;
 	Score.setString(std::to_string(score));
-	Score.setFont(KeyPressFont);
+	Score.setFont(KGCPFont);
 	Score.setPosition(sf::Vector2f(260, 20));
 	Score.setCharacterSize(70);
-	Score.setFillColor(sf::Color::White);
+	Score.setFillColor(sf::Color::Yellow);
 
 	ScoreText.setString("SCORE:");
-	ScoreText.setFont(KeyPressFont);
+	ScoreText.setFont(KGCPFont);
 	ScoreText.setPosition(sf::Vector2f(30, 20));
 	ScoreText.setCharacterSize(70);
 	ScoreText.setFillColor(sf::Color::White);
+	
+
+	ResetText.setString("Press R To Reset");
+	ResetText.setFont(KGCPFont);
+	ResetText.setPosition(sf::Vector2f(600, 800));
+	ResetText.setCharacterSize(50);
+	ResetText.setFillColor(sf::Color::White);
 
 
 
@@ -220,12 +227,14 @@ int main() {
 					skyPosition.y = -900;
 					SkySprite.setPosition(skyPosition);
 
+					skyPosition2.y = -1800;
+					SkySprite2.setPosition(skyPosition2);
+
 					yBackgroundVel = 5;
 
 				}
+
 				break;
-
-
 			}
 		}
 
@@ -239,8 +248,7 @@ int main() {
 			sf::Time elapsed = ScoreTimer.restart();
 		}
 
-
-		//Game On Loop
+		//GameOn Loop
 		if (GameOn == true) {
 
 			//Background Movement
@@ -293,8 +301,11 @@ int main() {
 			Score.setString(std::to_string(score));
 
 			window.draw(ScoreText);
-		}
 
+
+
+			window.draw(ResetText);
+		}
 
 		window.draw(RocketSprite);
 

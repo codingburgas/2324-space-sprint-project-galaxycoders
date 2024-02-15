@@ -188,14 +188,7 @@ int main() {
 
 		window.draw(mntnSprite);
 
-		if (skyPosition.y != 900) {
-			window.draw(SkySprite);
-		}
-		else if (skyPosition.y <= -899 && skyPosition.y != 900) {
-			window.draw(SkySprite2);
-		}
 
-		
 
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -249,11 +242,40 @@ int main() {
 
 		//Game On Loop
 		if (GameOn == true) {
+
+			//Background Movement
 			if (yBackgroundVel < 40) {
 				yBackgroundVel += 0.1f;
 			}
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
+
+
+
+			window.draw(SkySprite);
+			window.draw(SkySprite2);
+
+			if (skyPosition.y == -899 ) {
+				skyPosition2.y = skyPosition.y -= 900;
+				SkySprite2.setPosition(skyPosition2);
+			}
+
+			if (skyPosition.y == 900) {
+				skyPosition.y = -1800;
+				SkySprite.setPosition(skyPosition);
+			}
+
+
+
+			if (skyPosition2.y == -899 ) {
+				skyPosition.y = skyPosition2.y -= 900;
+				SkySprite.setPosition(skyPosition);
+			}
+
+			if (skyPosition2.y == 900) {
+				skyPosition2.y = -1800;
+				SkySprite2.setPosition(skyPosition2);
+			}
 
 			skyPosition.y += yBackgroundVel;
 			SkySprite.setPosition(skyPosition);
@@ -262,6 +284,8 @@ int main() {
 			SkySprite2.setPosition(skyPosition2);
 
 
+
+			//Scoreboard
 			sf::Time elapsed = ScoreTimer.getElapsedTime();
 
 			score = elapsed.asSeconds() * 10;

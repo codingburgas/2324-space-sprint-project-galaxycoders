@@ -1,11 +1,124 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <iomanip>
 
 const int windowWidth = 1600;
 const int windowHeight = 900;
 
+
+#include <iostream>
+#include <SFML/Graphics.hpp>
+
+void Textures(sf::RenderWindow& rWindow) {
+	float yBackgroundVel = 5;
+
+	bool GameOn = false;
+
+	sf::Texture BlueSky;
+	if (!BlueSky.loadFromFile("assets/background-1.png")) {
+		std::cout << "Couldn't load sky background" << std::endl;
+	}
+
+
+	sf::Sprite SkySprite;
+	sf::Vector2f skyPosition(0, -900);
+	SkySprite.setTexture(BlueSky);
+	SkySprite.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite.setPosition(skyPosition);
+
+	sf::Sprite SkySprite2;
+	sf::Vector2f skyPosition2(0, -1800);
+	SkySprite2.setTexture(BlueSky);
+	SkySprite2.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite2.setPosition(skyPosition2);
+
+	sf::Sprite SkySprite3;
+	sf::Vector2f skyPosition3(0, -2700);
+	SkySprite3.setTexture(BlueSky);
+	SkySprite3.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite3.setPosition(skyPosition3);
+
+	sf::Sprite SkySprite4;
+	sf::Vector2f skyPosition4(0, -3600);
+	SkySprite4.setTexture(BlueSky);
+	SkySprite4.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite4.setPosition(skyPosition4);
+
+	sf::Sprite SkySprite5;
+	sf::Vector2f skyPosition5(0, -4500);
+	SkySprite5.setTexture(BlueSky);
+	SkySprite5.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite5.setPosition(skyPosition5);
+
+	sf::Sprite SkySprite6;
+	sf::Vector2f skyPosition6(0, -5400);
+	SkySprite6.setTexture(BlueSky);
+	SkySprite6.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite6.setPosition(skyPosition6);
+
+	sf::Sprite SkySprite7;
+	sf::Vector2f skyPosition7(0, -6300);
+	SkySprite7.setTexture(BlueSky);
+	SkySprite7.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite7.setPosition(skyPosition7);
+
+	sf::Sprite SkySprite8;
+	sf::Vector2f skyPosition8(0, -7200);
+	SkySprite8.setTexture(BlueSky);
+	SkySprite8.setScale(sf::Vector2f(1.65, 1.6));
+	SkySprite8.setPosition(skyPosition8);
+
+
+
+	if (yBackgroundVel < 40) {
+		yBackgroundVel += 0.1f;
+	}
+
+	skyPosition.y += yBackgroundVel;
+	SkySprite.setPosition(skyPosition);
+
+	skyPosition2.y += yBackgroundVel;
+	SkySprite2.setPosition(skyPosition2);
+
+	skyPosition3.y += yBackgroundVel;
+	SkySprite3.setPosition(skyPosition3);
+
+	skyPosition4.y += yBackgroundVel;
+	SkySprite4.setPosition(skyPosition4);
+
+	skyPosition5.y += yBackgroundVel;
+	SkySprite5.setPosition(skyPosition5);
+
+	skyPosition6.y += yBackgroundVel;
+	SkySprite6.setPosition(skyPosition6);
+
+	skyPosition7.y += yBackgroundVel;
+	SkySprite7.setPosition(skyPosition7);
+
+	skyPosition8.y += yBackgroundVel;
+	SkySprite8.setPosition(skyPosition8);
+
+
+	sf::Event event;
+	while (rWindow.pollEvent(event)) {
+		switch (event.type) {
+		case sf::Event::KeyPressed:
+			GameOn = true;
+			break;
+		}
+	}
+
+	if (GameOn = true) {
+		rWindow.draw(SkySprite);
+		rWindow.draw(SkySprite2);
+		rWindow.draw(SkySprite3);
+		rWindow.draw(SkySprite4);
+		rWindow.draw(SkySprite5);
+		rWindow.draw(SkySprite6);
+		rWindow.draw(SkySprite7);
+		rWindow.draw(SkySprite8);
+	}
+}
 
 int main() {
 
@@ -13,7 +126,6 @@ int main() {
 	window.setFramerateLimit(60);
 
 	bool GameOn = false;
-
 
 	//Game Text
 	sf::Text StartGameText;
@@ -26,11 +138,11 @@ int main() {
 	sf::Font KGCPFont;
 
 	if (!StartFont.loadFromFile("resources/Fonts/vtks-giz/vtks giz.ttf")) {
-		std::cout << "Error!";
+		std::cout << "Error!" << std::endl;
 	}
 
 	if (!KGCPFont.loadFromFile("resources/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
-		std::cout << "Error!";
+		std::cout << "Error!" << std::endl;
 	}
 
 	//Start Screen Text
@@ -59,7 +171,7 @@ int main() {
 	ScoreText.setPosition(sf::Vector2f(30, 20));
 	ScoreText.setCharacterSize(70);
 	ScoreText.setFillColor(sf::Color::White);
-	
+
 
 	ResetText.setString("Press R To Reset");
 	ResetText.setFont(KGCPFont);
@@ -75,28 +187,12 @@ int main() {
 		std::cout << "Couldn't load mountain background" << std::endl;
 	}
 
-	sf::Texture BlueSky;
-	if (!BlueSky.loadFromFile("assets/background-1.png")) {
-		std::cout << "Couldn't load sky background" << std::endl;
-	}
-
 	sf::Sprite mntnSprite;
 	sf::Vector2f mntnPosition(-70, 0);
 	mntnSprite.setTexture(mntnBackground);
 	mntnSprite.setScale(sf::Vector2f(0.22, 0.2));
 	mntnSprite.setPosition(mntnPosition);
 
-	sf::Sprite SkySprite;
-	sf::Vector2f skyPosition(0, -900);
-	SkySprite.setTexture(BlueSky);
-	SkySprite.setScale(sf::Vector2f(1.65, 1.6));
-	SkySprite.setPosition(skyPosition);
-
-	sf::Sprite SkySprite2;
-	sf::Vector2f skyPosition2(0, -1799);
-	SkySprite2.setTexture(BlueSky);
-	SkySprite2.setScale(sf::Vector2f(1.65, 1.6));
-	SkySprite2.setPosition(skyPosition2);
 
 	float yBackgroundVel = 5;
 
@@ -117,11 +213,12 @@ int main() {
 	RocketSprite.setScale(sf::Vector2f(2.5, 2.5));
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
-	float xRotationVel = 0.8f;
+	float xRotationVel = 0.9f;
 	float xRocketVelocity = 8;
 
 	sf::Clock ScoreTimer;
 
+	Textures(window);
 
 	//Game Loop
 	while (window.isOpen()) {
@@ -195,8 +292,6 @@ int main() {
 
 		window.draw(mntnSprite);
 
-
-
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			switch (event.type) {
@@ -209,31 +304,6 @@ int main() {
 					window.close();
 
 				GameOn = true;
-
-
-				//Reset Button
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-					GameOn = false;
-
-					RocketPosition.x = 810;
-					RocketSprite.setPosition(RocketPosition);
-
-					RocketRotation = 0;
-					RocketSprite.setRotation(RocketRotation);
-
-					mntnPosition.y = 0;
-					mntnSprite.setPosition(mntnPosition);
-
-					skyPosition.y = -900;
-					SkySprite.setPosition(skyPosition);
-
-					skyPosition2.y = -1800;
-					SkySprite2.setPosition(skyPosition2);
-
-					yBackgroundVel = 5;
-
-				}
-
 				break;
 			}
 		}
@@ -255,41 +325,9 @@ int main() {
 			if (yBackgroundVel < 40) {
 				yBackgroundVel += 0.1f;
 			}
+
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
-
-
-
-			window.draw(SkySprite);
-			window.draw(SkySprite2);
-
-			if (skyPosition.y == -899 ) {
-				skyPosition2.y = skyPosition.y -= 900;
-				SkySprite2.setPosition(skyPosition2);
-			}
-
-			if (skyPosition.y == 900) {
-				skyPosition.y = -1800;
-				SkySprite.setPosition(skyPosition);
-			}
-
-
-
-			if (skyPosition2.y == -899 ) {
-				skyPosition.y = skyPosition2.y -= 900;
-				SkySprite.setPosition(skyPosition);
-			}
-
-			if (skyPosition2.y == 900) {
-				skyPosition2.y = -1800;
-				SkySprite2.setPosition(skyPosition2);
-			}
-
-			skyPosition.y += yBackgroundVel;
-			SkySprite.setPosition(skyPosition);
-
-			skyPosition2.y += yBackgroundVel;
-			SkySprite2.setPosition(skyPosition2);
 
 
 
@@ -297,15 +335,16 @@ int main() {
 			sf::Time elapsed = ScoreTimer.getElapsedTime();
 
 			score = elapsed.asSeconds() * 10;
+
 			window.draw(Score);
+
 			Score.setString(std::to_string(score));
 
 			window.draw(ScoreText);
 
-
-
 			window.draw(ResetText);
 		}
+
 
 		window.draw(RocketSprite);
 

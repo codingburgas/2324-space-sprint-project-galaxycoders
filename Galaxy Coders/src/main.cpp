@@ -235,6 +235,8 @@ int main() {
 	sf::Clock ScoreTimer;
 
 
+
+
 	//Game Loop
 	while (window.isOpen()) {
 
@@ -319,6 +321,11 @@ int main() {
 					window.close();
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+					GameOn = false;
+					mntnPosition.y = 0;
+					mntnSprite.setPosition(mntnPosition);
+					RocketPosition.x = 810;
+					RocketRotation = 0;
 					skyPosition.y = -900;
 					skyPosition2.y = -1800;
 					skyPosition3.y = -2700;
@@ -340,8 +347,10 @@ int main() {
 					skyPosition19.y = -17100;
 					skyPosition20.y = -18000;
 				}
-
+				else {
 				GameOn = true;
+				}
+
 				break;
 			}
 		}

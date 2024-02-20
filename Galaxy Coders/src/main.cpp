@@ -24,11 +24,11 @@ int main() {
 	sf::Font StartFont;
 	sf::Font KGCPFont;
 
-	if (!StartFont.loadFromFile("resources/Fonts/vtks-giz/vtks giz.ttf")) {
+	if (!StartFont.loadFromFile("assets/Fonts/vtks-giz/vtks giz.ttf")) {
 		std::cout << "Error!" << std::endl;
 	}
 
-	if (!KGCPFont.loadFromFile("resources/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
+	if (!KGCPFont.loadFromFile("assets/Fonts/kg-chasing-pavements/KGChasingPavements.ttf")) {
 		std::cout << "Error!" << std::endl;
 	}
 
@@ -104,6 +104,18 @@ int main() {
 
 
 
+	//Meteorite Textures
+	sf::Texture Meteorite1;
+	if (!Meteorite1.loadFromFile("assets/meteorite1-0-1.png")) {
+		std::cout << "Couldn't load meteorite 1" << std::endl;
+	}
+
+	sf::Sprite M1Sprite;
+	sf::Vector2f M1Position(0, 150);
+	M1Sprite.setTexture(Meteorite1);
+	M1Sprite.setPosition(M1Position);
+
+
 
 	//Rocket Texture
 	sf::Texture Rocket;
@@ -121,7 +133,7 @@ int main() {
 	RocketSprite.setScale(sf::Vector2f(2.5, 2.5));
 	RocketSprite.setOrigin(sf::Vector2f(25, 50));
 
-	float xRotationVel = 0.9f;
+	float xRotationVel = 1.1f;
 	float xRocketVelocity = 8;
 
 	sf::Clock ScoreTimer;
@@ -296,6 +308,8 @@ int main() {
 
 			window.draw(ResetText);
 		}
+
+		window.draw(M1Sprite);
 
 		window.draw(RocketSprite);
 

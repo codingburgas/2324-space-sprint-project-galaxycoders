@@ -76,8 +76,13 @@ int main() {
 		std::cout << "Couldn't load mountain background" << std::endl;
 	}
 
-	sf::Texture BlueSky;
-	if (!BlueSky.loadFromFile("assets/background-1.png")) {
+	sf::Texture SkyBackground;
+	if (!SkyBackground.loadFromFile("assets/background-1.png")) {
+		std::cout << "Couldn't load sky background" << std::endl;
+	}
+
+	sf::Texture TransitionBackground;
+	if (!TransitionBackground.loadFromFile("assets/background-2.png")) {
 		std::cout << "Couldn't load sky background" << std::endl;
 	}
 
@@ -89,15 +94,21 @@ int main() {
 
 	sf::Sprite SkySprite;
 	sf::Vector2f skyPosition(0, -900);
-	SkySprite.setTexture(BlueSky);
+	SkySprite.setTexture(SkyBackground);
 	SkySprite.setScale(sf::Vector2f(1.65, 1.6));
 	SkySprite.setPosition(skyPosition);
 
 	sf::Sprite SkySprite2;
 	sf::Vector2f skyPosition2(0, -1800);
-	SkySprite2.setTexture(BlueSky);
+	SkySprite2.setTexture(SkyBackground);
 	SkySprite2.setScale(sf::Vector2f(1.65, 1.6));
 	SkySprite2.setPosition(skyPosition2);
+
+	sf::Sprite TransitionSprite;
+	sf::Vector2f transitionPosition(0, -900);
+	TransitionSprite.setTexture(TransitionBackground);
+	TransitionSprite.setScale(sf::Vector2f(1.65, 1.525));
+	TransitionSprite.setPosition(transitionPosition);
 
 	float yBackgroundVel = 2;
 	int SkySpriteLayers = 0;
@@ -234,6 +245,9 @@ int main() {
 					RocketRotation = 0;
 					skyPosition.y = -900;
 					skyPosition2.y = -1800;
+					SkySpriteLayers = 0;
+					yBackgroundVel = 2;
+					transitionPosition.y = -900;
 				}
 
 				else {
@@ -265,7 +279,7 @@ int main() {
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
 
-			if (SkySpriteLayers <= 60) {
+			if (SkySpriteLayers <= 10) {
 
 				if (skyPosition.y >= 890 && SkySpriteLayers >= 2) {
 					skyPosition.y = -900;
@@ -285,15 +299,27 @@ int main() {
 					SkySpriteLayers += 2;
 				}
 			}
+			if (SkySpriteLayers >= 12 && SkySpriteLayers <= 14) {
+				
+				transitionPosition.y += yBackgroundVel;
+				TransitionSprite.setPosition(transitionPosition);
+				window.draw(TransitionSprite);
+				
+				if (transitionPosition.y >= 900) {
+					SkySpriteLayers += 2;
+				}
+			}
+
 			skyPosition.y += yBackgroundVel;
 			SkySprite.setPosition(skyPosition);
 
 			skyPosition2.y += yBackgroundVel;
 			SkySprite2.setPosition(skyPosition2);
 
+
 			window.draw(SkySprite);
 			window.draw(SkySprite2);
-
+			window.draw(TransitionSprite);
 
 			//Scoreboard
 			sf::Time elapsed = ScoreTimer.getElapsedTime();

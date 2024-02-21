@@ -281,7 +281,7 @@ int main() {
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
 
-			if (SkySpriteLayers <= 10) {
+			if (SkySpriteLayers <= 50) {
 
 				if (skyPosition.y >= 890 && SkySpriteLayers >= 2) {
 					skyPosition.y = -900;
@@ -301,7 +301,7 @@ int main() {
 					SkySpriteLayers += 2;
 				}
 			}
-			if (SkySpriteLayers >= 12 && SkySpriteLayers <= 14) {
+			if (SkySpriteLayers >= 52 && SkySpriteLayers <= 54) {
 				
 				transitionPosition.y += yBackgroundVel;
 				TransitionSprite.setPosition(transitionPosition);
@@ -348,17 +348,18 @@ int main() {
 			}
 
 			//Meteorite Movement
-			M1Position.y += 10.0f;
-			M1Position.x += MeteoriteAngleVel;
-
-
-			M1Sprite.setPosition(M1Position);
-			window.draw(M1Sprite);
-
-			if (M1Position.y >= 890) {
-				M1Position.y = -150;
+			if (SkySpriteLayers >= 2) {
+				M1Position.y += 10.0f;
+				M1Position.x += MeteoriteAngleVel;
+	
 				M1Sprite.setPosition(M1Position);
-				window.draw(SkySprite2);
+				window.draw(M1Sprite);
+
+				if (M1Position.y >= 890) {
+					M1Position.y = -150;
+					M1Sprite.setPosition(M1Position);
+					window.draw(SkySprite2);
+				}
 			}
 
 

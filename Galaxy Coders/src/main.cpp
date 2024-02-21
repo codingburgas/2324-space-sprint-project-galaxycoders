@@ -3,16 +3,17 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-const int windowWidth = 1600;
-const int windowHeight = 900;
-
-
-
 int main() {
+	const int windowWidth = 1600;
+	const int windowHeight = 900;
+
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders");
 	window.setFramerateLimit(60);
 
 	bool GameOn = false;
+	bool GameOver = false;
+
+
 
 	//Game Text
 	sf::Text StartGameText;
@@ -153,12 +154,11 @@ int main() {
 
 
 
-
 	//Game Loop
 	while (window.isOpen()) {
 
 
-		//Movement
+		//Rocket Movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			RocketPosition.x -= xRocketVelocity;
 			if (RocketRotation > -35) {
@@ -201,6 +201,7 @@ int main() {
 		}
 
 
+
 		//Walls Collision Physics
 		if (RocketPosition.x > 1840) {
 			RocketPosition.x = -10;
@@ -220,6 +221,7 @@ int main() {
 
 		RocketSprite.setPosition(RocketPosition);
 		RocketSprite.setRotation(RocketRotation);
+
 
 
 		//Draw
@@ -260,6 +262,8 @@ int main() {
 			}
 		}
 
+
+
 		//Start Screen
 		if (GameOn == false) {
 
@@ -270,8 +274,12 @@ int main() {
 			sf::Time elapsed = ScoreTimer.restart();
 		}
 
+
+
 		//GameOn Loop
 		if (GameOn == true) {
+
+
 
 			//Background Movement
 			if (yBackgroundVel < 15) {
@@ -281,6 +289,7 @@ int main() {
 			mntnPosition.y += yBackgroundVel;
 			mntnSprite.setPosition(mntnPosition);
 
+			//Background Loop
 			if (SkySpriteLayers <= 50) {
 
 				if (skyPosition.y >= 890 && SkySpriteLayers >= 2) {
@@ -312,6 +321,7 @@ int main() {
 				}
 			}
 
+
 			skyPosition.y += yBackgroundVel;
 			SkySprite.setPosition(skyPosition);
 
@@ -324,13 +334,15 @@ int main() {
 			window.draw(TransitionSprite);
 
 
+
 			//METEORITE PHYSICS
 			 
 			//Random Meteorite Position
-			
 			if (M1Position.y == -130) {
 				M1Position.x = (rand() % 1450) + 1;
 				M1Sprite.setPosition(M1Position);
+
+				//Random Meteorite Angle
 				if (M1Position.x < 800) {
 					int MeteoriteAngle = (rand() % 8);
 					MeteoriteAngleVel = MeteoriteAngle;
@@ -377,6 +389,7 @@ int main() {
 
 			window.draw(ResetText);
 		}
+
 
 
 		window.draw(RocketSprite);

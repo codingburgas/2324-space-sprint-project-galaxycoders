@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include <string>
 
@@ -8,7 +9,6 @@ const int windowHeight = 900;
 
 
 int main() {
-
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Galaxy Coders");
 	window.setFramerateLimit(60);
 
@@ -122,7 +122,7 @@ int main() {
 	}
 
 	sf::Sprite M1Sprite;
-	sf::Vector2f M1Position(0, 150);
+	sf::Vector2f M1Position(230, -140);
 	M1Sprite.setTexture(Meteorite1);
 	M1Sprite.setPosition(M1Position);
 
@@ -321,6 +321,27 @@ int main() {
 			window.draw(SkySprite2);
 			window.draw(TransitionSprite);
 
+
+
+			//Meteorite Movement
+			if (M1Position.y == -150) {
+
+				M1Position.x = (rand() % 1450) + 1;
+				M1Sprite.setPosition(M1Position);
+			}
+
+			M1Position.y += 20.0f;
+			M1Sprite.setPosition(M1Position);
+			window.draw(M1Sprite);
+
+			if (M1Position.y >= 890) {
+				M1Position.y = -150;
+				M1Sprite.setPosition(M1Position);
+				window.draw(SkySprite2);
+			}
+
+
+
 			//Scoreboard
 			sf::Time elapsed = ScoreTimer.getElapsedTime();
 
@@ -335,7 +356,6 @@ int main() {
 			window.draw(ResetText);
 		}
 
-		window.draw(M1Sprite);
 
 		window.draw(RocketSprite);
 

@@ -125,6 +125,8 @@ int main() {
 	sf::Vector2f M1Position(230, -140);
 	M1Sprite.setTexture(Meteorite1);
 	M1Sprite.setPosition(M1Position);
+	float MeteoriteVel = 10;
+	int MeteoriteAngleVel = 0;
 
 
 
@@ -322,15 +324,34 @@ int main() {
 			window.draw(TransitionSprite);
 
 
-
-			//Meteorite Movement
-			if (M1Position.y == -150) {
-
+			//METEORITE PHYSICS
+			 
+			//Random Meteorite Position
+			
+			if (M1Position.y == -130) {
 				M1Position.x = (rand() % 1450) + 1;
 				M1Sprite.setPosition(M1Position);
+				if (M1Position.x < 800) {
+					int MeteoriteAngle = (rand() % 8);
+					MeteoriteAngleVel = MeteoriteAngle;
+					if (MeteoriteAngleVel <= 2) {
+						MeteoriteAngleVel += 3;
+					}
+				}
+				else {
+					int MeteoriteAngle = (rand() % 8) - 16;
+					MeteoriteAngleVel = MeteoriteAngle;
+					if (MeteoriteAngleVel >= -2) {
+						MeteoriteAngleVel -= 3;
+					}
+				}
 			}
 
-			M1Position.y += 20.0f;
+			//Meteorite Movement
+			M1Position.y += 10.0f;
+			M1Position.x += MeteoriteAngleVel;
+
+
 			M1Sprite.setPosition(M1Position);
 			window.draw(M1Sprite);
 

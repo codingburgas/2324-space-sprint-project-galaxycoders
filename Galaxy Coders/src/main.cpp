@@ -162,11 +162,12 @@ int main() {
 	}
 
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(695, 550);
+	sf::Vector2f RocketPosition(810, 550);
 
 	RocketSprite.setTexture(Rocket);
 	RocketSprite.setPosition(RocketPosition);
 	RocketSprite.setScale(sf::Vector2f(1, 1));
+	RocketSprite.setOrigin(sf::Vector2f(100, 0));
 
 	//Second Rocket 
 	sf::Texture Rocket2;
@@ -175,7 +176,7 @@ int main() {
 	}
 
 	sf::Sprite RocketSprite2;
-	sf::Vector2f RocketPosition2(695, 550);
+	sf::Vector2f RocketPosition2(810, 550);
 
 	RocketSprite2.setTexture(Rocket2);
 	RocketSprite2.setPosition(RocketPosition2);

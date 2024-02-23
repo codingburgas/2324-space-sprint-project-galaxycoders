@@ -84,7 +84,12 @@ int main() {
 
 	sf::Texture TransitionBackground;
 	if (!TransitionBackground.loadFromFile("assets/background-2.png")) {
-		std::cout << "Couldn't load sky background" << std::endl;
+		std::cout << "Couldn't load transition background" << std::endl;
+	}
+
+	sf::Texture SpaceBackground;
+	if (!SpaceBackground.loadFromFile("assets/background-3.png")) {
+		std::cout << "Couldn't load space background" << std::endl;
 	}
 
 	sf::Sprite mntnSprite;
@@ -93,6 +98,7 @@ int main() {
 	mntnSprite.setScale(sf::Vector2f(0.22, 0.2));
 	mntnSprite.setPosition(mntnPosition);
 
+	//Sky Background
 	sf::Sprite SkySprite;
 	sf::Vector2f skyPosition(0, -900);
 	SkySprite.setTexture(SkyBackground);
@@ -105,11 +111,25 @@ int main() {
 	SkySprite2.setScale(sf::Vector2f(1.65, 1.6));
 	SkySprite2.setPosition(skyPosition2);
 
+	//Transition Background
 	sf::Sprite TransitionSprite;
 	sf::Vector2f transitionPosition(0, -900);
 	TransitionSprite.setTexture(TransitionBackground);
 	TransitionSprite.setScale(sf::Vector2f(1.65, 1.525));
 	TransitionSprite.setPosition(transitionPosition);
+
+	//Space Background
+	sf::Sprite SpaceSprite;
+	sf::Vector2f spacePosition(0, -900);
+	SpaceSprite.setTexture(SpaceBackground);
+	SpaceSprite.setScale(sf::Vector2f(1.65, 1.6));
+	SpaceSprite.setPosition(spacePosition);
+
+	sf::Sprite SpaceSprite2;
+	sf::Vector2f spacePosition2(0, -1800);
+	SpaceSprite2.setTexture(SpaceBackground);
+	SpaceSprite2.setScale(sf::Vector2f(1.65, 1.6));
+	SpaceSprite2.setPosition(spacePosition2);
 
 	float yBackgroundVel = 2;
 	int SkySpriteLayers = 0;
@@ -290,27 +310,22 @@ int main() {
 			mntnSprite.setPosition(mntnPosition);
 
 			//Background Loop
-			if (SkySpriteLayers <= 50) {
-
-				if (skyPosition.y >= 890 && SkySpriteLayers >= 2) {
-					skyPosition.y = -900;
-					SkySprite.setPosition(skyPosition);
-					window.draw(SkySprite);
-				}
-				if (skyPosition.y >= 900) {
+			if (SkySpriteLayers <= 10) {
+				
+				if (skyPosition.y >= 890) {
 					skyPosition.y = -900;
 					SkySprite.setPosition(skyPosition);
 					window.draw(SkySprite);
 				}
 
-				if (skyPosition2.y >= 890) {
+				if (skyPosition2.y >= 900) {
 					skyPosition2.y = -900;
 					SkySprite2.setPosition(skyPosition2);
 					window.draw(SkySprite2);
 					SkySpriteLayers += 2;
 				}
 			}
-			if (SkySpriteLayers >= 52 && SkySpriteLayers <= 54) {
+			if (SkySpriteLayers >= 12 && SkySpriteLayers < 14) {
 				
 				transitionPosition.y += yBackgroundVel;
 				TransitionSprite.setPosition(transitionPosition);
@@ -321,6 +336,27 @@ int main() {
 				}
 			}
 
+			if (SkySpriteLayers >= 12) {
+
+				if (spacePosition.y >= 890) {
+					spacePosition.y = -900;
+					SpaceSprite.setPosition(spacePosition);
+					window.draw(SpaceSprite);
+				}
+
+				if (spacePosition2.y >= 890) {
+					spacePosition2.y = -900;
+					SpaceSprite2.setPosition(spacePosition2);
+					window.draw(SpaceSprite2);
+					SkySpriteLayers += 2;
+				}
+			spacePosition.y += yBackgroundVel;
+			SpaceSprite.setPosition(spacePosition);
+
+			spacePosition2.y += yBackgroundVel;
+			SpaceSprite2.setPosition(spacePosition2);
+
+			}
 
 			skyPosition.y += yBackgroundVel;
 			SkySprite.setPosition(skyPosition);
@@ -328,7 +364,8 @@ int main() {
 			skyPosition2.y += yBackgroundVel;
 			SkySprite2.setPosition(skyPosition2);
 
-
+			window.draw(SpaceSprite);
+			window.draw(SpaceSprite2);
 			window.draw(SkySprite);
 			window.draw(SkySprite2);
 			window.draw(TransitionSprite);

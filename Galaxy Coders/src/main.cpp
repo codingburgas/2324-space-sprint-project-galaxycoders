@@ -190,7 +190,7 @@ int main() {
 
 
 
-	//Game Loop
+	//GAME LOOP
 	while (window.isOpen()) {
 
 
@@ -202,14 +202,6 @@ int main() {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			RocketPosition2.x += xRocketVelocity;
 			
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			RocketPosition2.y -= xRocketVelocity;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			RocketPosition2.y += xRocketVelocity;
 		}
 		RocketSprite2.setPosition(RocketPosition2);
 

@@ -263,20 +263,26 @@ int main() {
 					window.close();
 
 				//Reset Button
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-					GameOn = false;
-					mntnPosition.y = 0;
-					mntnSprite.setPosition(mntnPosition);
-					RocketPosition.x = 695;
-					skyPosition.y = -900;
-					skyPosition2.y = -1800;
-					SkySpriteLayers = 0;
-					yBackgroundVel = 2;
-					transitionPosition.y = -900;
-				}
+				if (GameOver == false) {
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+						GameOn = false;
+						GameOver = false;
+						mntnPosition.y = 0;
+						mntnSprite.setPosition(mntnPosition);
+						RocketPosition.x = 810;
+						skyPosition.y = -900;
+						skyPosition2.y = -1800;
+						spacePosition.y = -900;
+						spacePosition2.y = -1800;
+						SkySpriteLayers = 0;
+						yBackgroundVel = 2;
+						transitionPosition.y = -900;
+					}
 
-				else {
+					else {
 					GameOn = true;
+					}
+				
 				}
 
 				break;
@@ -286,7 +292,7 @@ int main() {
 
 
 		//Start Screen
-		if (GameOn == false) {
+		if (GameOn == false && GameOver == false) {
 
 			window.draw(StartGameText);
 

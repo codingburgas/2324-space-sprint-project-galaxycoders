@@ -136,6 +136,7 @@ int main() {
 
 
 
+
 	//Meteorite Textures
 	sf::Texture Meteorite1;
 	if (!Meteorite1.loadFromFile("assets/meteorite1-0-1.png")) {
@@ -146,29 +147,43 @@ int main() {
 	sf::Vector2f M1Position(230, -140);
 	M1Sprite.setTexture(Meteorite1);
 	M1Sprite.setPosition(M1Position);
+	M1Sprite.setOrigin(sf::Vector2f(75, 70));
 	float MeteoriteVel = 10;
 	int MeteoriteAngleVel = 0;
 
 
 
-	//Rocket Texture
+	//ROCKET TEXTURES
+	
+	//First Rocket
 	sf::Texture Rocket;
-	if (!Rocket.loadFromFile("assets/rocket-texture.png")) {
+	if (!Rocket.loadFromFile("assets/Spaceship.png")) {
 		std::cout << "Couldn't load rocket" << std::endl;
 	}
 
 	sf::Sprite RocketSprite;
-	sf::Vector2f RocketPosition(810, 620);
-	float RocketRotation = 0;
+	sf::Vector2f RocketPosition(695, 550);
 
 	RocketSprite.setTexture(Rocket);
 	RocketSprite.setPosition(RocketPosition);
-	RocketSprite.setRotation(RocketRotation);
-	RocketSprite.setScale(sf::Vector2f(2.5, 2.5));
-	RocketSprite.setOrigin(sf::Vector2f(25, 50));
+	RocketSprite.setScale(sf::Vector2f(1, 1));
 
-	float xRotationVel = 1.1f;
-	float xRocketVelocity = 8;
+	//Second Rocket 
+	sf::Texture Rocket2;
+	if (!Rocket2.loadFromFile("assets/Spaceship-1.png")) {
+		std::cout << "Couldn't load rocket" << std::endl;
+	}
+
+	sf::Sprite RocketSprite2;
+	sf::Vector2f RocketPosition2(695, 550);
+
+	RocketSprite2.setTexture(Rocket2);
+	RocketSprite2.setPosition(RocketPosition2);
+	RocketSprite2.setScale(sf::Vector2f(1, 1));
+	RocketSprite2.setOrigin(sf::Vector2f(100, 0));
+
+	float xRocketVelocity = 10;
+	 
 
 	sf::Clock ScoreTimer;
 
@@ -180,67 +195,53 @@ int main() {
 
 		//Rocket Movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			RocketPosition.x -= xRocketVelocity;
-			if (RocketRotation > -35) {
-
-				RocketRotation -= xRotationVel;
-
-			}
-			if (RocketRotation < -8 && xRocketVelocity < 25) {
-				xRocketVelocity += 0.1f;
-			}
-
-			if (RocketRotation > 8) {
-				xRocketVelocity -= 0.1f;
-			}
-
-			if (RocketRotation == 8 && RocketRotation < 0) {
-				xRocketVelocity += 0.1f;
-			}
+			RocketPosition2.x -= xRocketVelocity;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			RocketPosition.x += xRocketVelocity;
-			if (RocketRotation < 35) {
-
-				RocketRotation += xRotationVel;
-
-			}
-			if (RocketRotation > 8 && xRocketVelocity < 25) {
-				xRocketVelocity += 0.1f;
-			}
-
-			if (RocketRotation < -8) {
-				xRocketVelocity -= 0.1f;
-			}
-
-			if (RocketRotation == 8 && RocketRotation > 0) {
-				xRocketVelocity += 0.1f;
-			}
-
+			RocketPosition2.x += xRocketVelocity;
+			
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			RocketPosition2.y -= xRocketVelocity;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+			RocketPosition2.y += xRocketVelocity;
+		}
+		RocketSprite2.setPosition(RocketPosition2);
 
 
 
 		//Walls Collision Physics
-		if (RocketPosition.x > 1840) {
-			RocketPosition.x = -10;
+		if (RocketPosition2.x > 1840) {
+			RocketPosition2.x = -10;
 		}
 
-		else if (RocketPosition.x < -10) {
-			RocketPosition.x = 1840;
+		else if (RocketPosition2.x < -10) {
+			RocketPosition2.x = 1840;
 		}
 
-		else if (RocketPosition.x > 1840) {
-			RocketPosition.x = -10;
+		else if (RocketPosition2.x > 1840) {
+			RocketPosition2.x = -10;
 		}
 
-		else if (RocketPosition.x < -10) {
-			RocketPosition.x = 1840;
+		else if (RocketPosition2.x < -10) {
+			RocketPosition2.x = 1840;
 		}
 
-		RocketSprite.setPosition(RocketPosition);
-		RocketSprite.setRotation(RocketRotation);
+		RocketSprite2.setPosition(RocketPosition2);
+
+
+
+		//Meteorite Collision Physics
+		if (M1Position.x >= (RocketPosition2.x - 50) && M1Position.x <= (RocketPosition2.x + 50)) {
+			if (M1Position.y >= RocketPosition2.y && M1Position.y <= (RocketPosition2.y + 100)) {
+				GameOver = true;
+				GameOn = false;
+			}
+		}
 
 
 
@@ -265,8 +266,7 @@ int main() {
 					GameOn = false;
 					mntnPosition.y = 0;
 					mntnSprite.setPosition(mntnPosition);
-					RocketPosition.x = 810;
-					RocketRotation = 0;
+					RocketPosition.x = 695;
 					skyPosition.y = -900;
 					skyPosition2.y = -1800;
 					SkySpriteLayers = 0;
@@ -292,6 +292,9 @@ int main() {
 			window.draw(KeyPressText);
 
 			sf::Time elapsed = ScoreTimer.restart();
+
+			window.draw(RocketSprite);
+
 		}
 
 
@@ -363,7 +366,7 @@ int main() {
 
 			skyPosition2.y += yBackgroundVel;
 			SkySprite2.setPosition(skyPosition2);
-
+			
 			window.draw(SpaceSprite);
 			window.draw(SpaceSprite2);
 			window.draw(SkySprite);
@@ -425,11 +428,11 @@ int main() {
 			window.draw(ScoreText);
 
 			window.draw(ResetText);
+
+			window.draw(RocketSprite2);
 		}
 
 
-
-		window.draw(RocketSprite);
 
 		window.display();
 	}

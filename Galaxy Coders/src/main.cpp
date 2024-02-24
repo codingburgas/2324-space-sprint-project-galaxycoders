@@ -67,6 +67,17 @@ int main() {
 	ResetText.setCharacterSize(50);
 	ResetText.setFillColor(sf::Color::White);
 
+	//GameOver Text
+	sf::Texture TextBox;
+	if (!TextBox.loadFromFile("assets/textbox.png")) {
+		std::cout << "Couldn't load text box" << std::endl;
+	}
+	
+	sf::Sprite TextBoxSprite;
+	sf::Vector2f TextBoxPos(200, -100);
+	TextBoxSprite.setTexture(TextBox);
+	TextBoxSprite.setPosition(TextBoxPos);
+	TextBoxSprite.setScale(sf::Vector2f(6, 6));
 
 
 
@@ -136,7 +147,6 @@ int main() {
 
 
 
-
 	//Meteorite Textures
 	sf::Texture Meteorite1;
 	if (!Meteorite1.loadFromFile("assets/meteorite1-0-1.png")) {
@@ -182,11 +192,15 @@ int main() {
 	RocketSprite2.setPosition(RocketPosition2);
 	RocketSprite2.setScale(sf::Vector2f(1, 1));
 	RocketSprite2.setOrigin(sf::Vector2f(100, 0));
-
 	float xRocketVelocity = 10;
 	 
 
+
+
+
 	sf::Clock ScoreTimer;
+
+
 
 
 
@@ -229,8 +243,8 @@ int main() {
 
 
 		//Meteorite Collision Physics
-		if (M1Position.x >= (RocketPosition2.x - 50) && M1Position.x <= (RocketPosition2.x + 50)) {
-			if (M1Position.y >= RocketPosition2.y && M1Position.y <= (RocketPosition2.y + 100)) {
+		if (M1Position.x >= (RocketPosition2.x - 80) && M1Position.x <= (RocketPosition2.x + 80)) {
+			if (M1Position.y >= RocketPosition2.y && M1Position.y <= (RocketPosition2.y + 200)) {
 				GameOver = true;
 				GameOn = false;
 			}
@@ -258,7 +272,6 @@ int main() {
 				if (GameOver == false) {
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 						GameOn = false;
-						GameOver = false;
 						mntnPosition.y = 0;
 						mntnSprite.setPosition(mntnPosition);
 						RocketPosition.x = 810;
@@ -274,7 +287,25 @@ int main() {
 					else {
 					GameOn = true;
 					}
-				
+				}
+
+				if (GameOver == true) {
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+						GameOver = false;
+						GameOn = false;
+						mntnPosition.y = 0;
+						mntnSprite.setPosition(mntnPosition);
+						RocketPosition.x = 810;
+						skyPosition.y = -900;
+						skyPosition2.y = -1800;
+						spacePosition.y = -900;
+						spacePosition2.y = -1800;
+						SkySpriteLayers = 0;
+						yBackgroundVel = 2;
+						transitionPosition.y = -900;
+						M1Position.y = -140;
+						M1Sprite.setPosition(M1Position);
+					}
 				}
 
 				break;
@@ -430,8 +461,12 @@ int main() {
 
 			window.draw(RocketSprite2);
 		}
+		
 
-
+		if (GameOver == true) {
+				window.draw(TextBoxSprite);
+			
+		}
 
 		window.display();
 	}

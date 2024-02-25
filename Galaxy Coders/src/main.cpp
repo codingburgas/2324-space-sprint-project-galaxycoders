@@ -21,6 +21,7 @@ int main() {
 	sf::Text Score;
 	sf::Text ScoreText;
 	sf::Text ResetText;
+	sf::Text DyingText;
 
 	sf::Font StartFont;
 	sf::Font KGCPFont;
@@ -79,10 +80,16 @@ int main() {
 	TextBoxSprite.setPosition(TextBoxPos);
 	TextBoxSprite.setScale(sf::Vector2f(6, 6));
 
+	DyingText.setString("YOU DIED!");
+	DyingText.setFont(KGCPFont);
+	DyingText.setPosition(sf::Vector2f(680, 280));
+	DyingText.setCharacterSize(60);
+	DyingText.setFillColor(sf::Color::Black);
 
 
 
-	//Background Textures
+	//BACKGROUND TEXTURES
+
 	sf::Texture mntnBackground;
 	if (!mntnBackground.loadFromFile("assets/45908.jpg")) {
 		std::cout << "Couldn't load mountain background" << std::endl;
@@ -193,14 +200,8 @@ int main() {
 	RocketSprite2.setScale(sf::Vector2f(1, 1));
 	RocketSprite2.setOrigin(sf::Vector2f(100, 0));
 	float xRocketVelocity = 10;
-	 
-
-
-
 
 	sf::Clock ScoreTimer;
-
-
 
 
 
@@ -463,9 +464,13 @@ int main() {
 		}
 		
 
+			window.draw(TextBoxSprite);
+			window.draw(DyingText);
 		if (GameOver == true) {
-				window.draw(TextBoxSprite);
-			
+
+			if (score > 10 && score < 150) {
+				window.draw(ResetText);
+			}
 		}
 
 		window.display();

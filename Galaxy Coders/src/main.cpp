@@ -14,7 +14,6 @@ int main() {
 	bool GameOver = false;
 
 
-
 	//GAME TEXT
 	sf::Text StartGameText;
 	sf::Text KeyPressText;

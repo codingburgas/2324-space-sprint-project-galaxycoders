@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./assets/r.imgs/mainLogo.jpg" width="500px">
+<img src="./Galaxy Coders/assets/r.imgs/mainLogo.jpg" width="500px">
 </p>
  
  
@@ -12,15 +12,13 @@
  
 ## Languages & tools:
 <p align="left"> 
-<img src="./assets/r.imgs/sfml1.png" width="190px" height="150px"> 
-<img src="./assets/r.imgs/git1.png" width="150px" height="150px"> 
-<img src="./assets/r.imgs/c++.jfif" width="200px" height="145px">
- </p>
- <p align="left"> 
-<img src="./assets/r.imgs/visual.png" width="120px" height="95px"> 
-<img src="./assets/r.imgs/teams.png" width="120px" height="95px"> 
-<img src="./assets/r.imgs/power.png" width="120px" height="95px"> 
-<img src="./assets/r.imgs/word.png" width="120px" height="95px"> 
+<img src="./Galaxy Coders/assets/r.imgs/sfml1.png" width="50px" height="50px"> 
+<img src="./Galaxy Coders/assets/r.imgs/git1.png" width="50px" height="50px"> 
+<img src="./Galaxy Coders/assets/r.imgs/c++.jfif" width="50px" height="50px">
+<img src="./Galaxy Coders/assets/r.imgs/visual.png" width="50px" height="50px"> 
+<img src="./Galaxy Coders/assets/r.imgs/teams.png" width="50px" height="50px"> 
+<img src="./Galaxy Coders/assets/r.imgs/power.png" width="50px" height="50px"> 
+<img src="./Galaxy Coders/assets/r.imgs/word.png" width="50px" height="50px"> 
  </p>
 
 ## Description:

@@ -355,6 +355,7 @@ int main() {
 						mntnPosition.y = 0;
 						mntnSprite.setPosition(mntnPosition);
 						RocketPosition2.x = 810;
+						RocketPosition2.y = 550;
 						skyPosition.y = -900;
 						skyPosition2.y = -1800;
 						spacePosition.y = -900;
@@ -381,6 +382,7 @@ int main() {
 						mntnPosition.y = 0;
 						mntnSprite.setPosition(mntnPosition);
 						RocketPosition2.x = 810;
+						RocketPosition2.y = 550;
 						skyPosition.y = -900;
 						skyPosition2.y = -1800;
 						spacePosition.y = -900;
@@ -519,7 +521,7 @@ int main() {
 
 			//Meteorite Movement
 			if (SkySpriteLayers >= 2) {
-				M1Position.y += 15.0f;
+				M1Position.y += 20.0f;
 				M1Position.x += MeteoriteAngleVel;
 	
 				M1Sprite.setPosition(M1Position);
